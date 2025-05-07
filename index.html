@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skrrr toilette toiletto</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        #myImage {
+            width: 100px;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.1s ease;
+            z-index: 1;
+        }
+
+        #myVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <video id="myVideo" src="https://files.catbox.moe/rq3txt.mp4" autoplay loop muted></video>
+    <img id="myImage" src="https://files.catbox.moe/q6hm06.webp"  style="width: 100px; height: auto;">
+    <script>
+        const img = document.getElementById('myImage');
+        const video = document.getElementById('myVideo');
+        let x = 0;
+        let y = 0;
+        let dx = 2;
+        let dy = 2;
+        let boundaryX = window.innerWidth;
+        let boundaryY = window.innerHeight;
+
+        function moveImage() {
+            x += dx;
+            y += dy;
+
+            // Check for boundary collisions
+            if (x + img.width > boundaryX) {
+                x = boundaryX - img.width;
+                dx = -dx;
+            } else if (x < 0) {
+                x = 0;
+                dx = -dx;
+            }
+
+            if (y + img.height > boundaryY) {
+                y = boundaryY - img.height;
+                dy = -dy;
+            } else if (y < 0) {
+                y = 0;
+                dy = -dy;
+            }
+
+            img.style.transform = `translate(${x}px, ${y}px)`;
+            requestAnimationFrame(moveImage);
+        }
+
+        function resizeHandler() {
+            boundaryX = window.innerWidth;
+            boundaryY = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeHandler);
+
+        // Start the animation and video
+        moveImage();
+        video.play();
+        video.muted = true;
+    </script>
+</body>
+</html>
